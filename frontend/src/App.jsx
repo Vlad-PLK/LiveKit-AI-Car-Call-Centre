@@ -12,21 +12,20 @@ function App() {
   return (
     <div className="app">
       <header className="header">
-        <div className="logo">AutoZone</div>
+        <div className="logo">Negresco Nice</div>
       </header>
 
       <main>
         <section className="hero">
-          <h1>Get the Right Parts. Right Now</h1>
-          <p>Free Next Day Delivery on Eligible Orders</p>
+          <h1>Get the best of your journey right now</h1>
           <div className="search-bar">
-            <input type="text" placeholder='Enter vehicle or part number'></input>
+            <input type="text" placeholder='Enter your booking number'></input>
             <button>Search</button>
           </div>
         </section>
 
         <button className="support-button" onClick={handleSupportClick}>
-          Talk to an Agent!
+          Talk with Alfred now !
         </button>
       </main>
 

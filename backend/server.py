@@ -1,6 +1,8 @@
 import os
 from livekit import api
 from flask import Flask, request
+from quart import Quart, request
+from quart_cors import cors
 from dotenv import load_dotenv
 from flask_cors import CORS
 from livekit.api import LiveKitAPI, ListRoomsRequest
@@ -8,8 +10,11 @@ import uuid
 
 load_dotenv()
 
-app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+app = Quart(__name__)
+app = cors(app, allow_origin="*")
+
+# app = Flask(__name__)
+# CORS(app, resources={r"/*": {"origins": "*"}})
 
 async def generate_room_name():
     name = "room-" + str(uuid.uuid4())[:8]
@@ -43,4 +48,5 @@ async def get_token():
     return token.to_jwt()
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5001, debug=True)
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=5001, log_level="debug")

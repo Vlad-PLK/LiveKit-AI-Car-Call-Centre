@@ -35,7 +35,7 @@ const LiveKitModal = ({ setShowSupport }) => {
         <div className="support-room">
           {isSubmittingName ? (
             <form onSubmit={handleNameSubmit} className="name-form">
-              <h2>Enter your name to connect with support</h2>
+              <h2>Enter your name to connect with Alfred !</h2>
               <input
                 type="text"
                 value={name}
@@ -59,6 +59,8 @@ const LiveKitModal = ({ setShowSupport }) => {
               connect={true}
               video={false}
               audio={true}
+              data-lk-theme="default"
+              style={{ height: '100vh'}}
               onDisconnected={() => {
                 setShowSupport(false);
                 setIsSubmittingName(true);

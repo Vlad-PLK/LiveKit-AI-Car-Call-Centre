@@ -4,11 +4,13 @@ from dataclasses import dataclass
 from contextlib import contextmanager
 
 @dataclass
-class Car:
-    vin: str
-    make: str
-    model: str
-    year: int
+class Booking:
+    Booking_Number: str
+    DateIn: str
+    DateOut: str
+    NightsNumber : int
+    Room: str
+    Price: int
 
 class DatabaseDriver:
     def __init__(self, db_path: str = "auto_db.sqlite"):
@@ -30,35 +32,39 @@ class DatabaseDriver:
             # Create cars table
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS cars (
-                    vin TEXT PRIMARY KEY,
-                    make TEXT NOT NULL,
-                    model TEXT NOT NULL,
-                    year INTEGER NOT NULL
+                    Booking_Number TEXT PRIMARY KEY,
+                    DateIn TEXT NOT NULL,
+                    DateOut TEXT NOT NULL,
+                    NightsNumber INTEGER NOT NULL,
+                    Room TEXT NOT NULL,
+                    Price INTEGER NOT NULL
                 )
             """)
             conn.commit()
 
-    def create_car(self, vin: str, make: str, model: str, year: int) -> Car:
+    def create_booking(self, Booking_Number: str, DateIn: str, DateOut: str, NightsNumber: int, Room: str, Price: int) -> Booking:
         with self._get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute(
-                "INSERT INTO cars (vin, make, model, year) VALUES (?, ?, ?, ?)",
-                (vin, make, model, year)
+                "INSERT INTO bookings (Booking_Number, DateIn, DateOut, NightsNumber, Room, Price) VALUES (?, ?, ?, ?)",
+                (Booking_Number, DateIn, DateOut, NightsNumber, Room, Price)
             )
             conn.commit()
-            return Car(vin=vin, make=make, model=model, year=year)
+            return Booking(Booking_Number=Booking_Number, DateIn=DateIn, DateOut=DateOut, NightsNumber=NightsNumber, Room=Room, Price=Price)
 
-    def get_car_by_vin(self, vin: str) -> Optional[Car]:
+    def get_booking_by_Booking_Number(self, Booking_Number: str) -> Optional[Booking]:
         with self._get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM cars WHERE vin = ?", (vin,))
+            cursor.execute("SELECT * FROM bookings WHERE Booking_Number = ?", (Booking_Number,))
             row = cursor.fetchone()
             if not row:
                 return None
             
-            return Car(
-                vin=row[0],
-                make=row[1],
-                model=row[2],
-                year=row[3]
+            return Booking(
+                Booking_Number=row[0],
+                DateIn=row[1],
+                DateOut=row[2],
+                NightsNumber=row[3],
+                Room=row[4],
+                Price=row[5]
             )
